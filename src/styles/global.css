@@ -9,8 +9,9 @@
   --color-coral: #d98870;
   --color-ocean-dark: #103e49;
   --color-muted: #546c6e;
-  --font-editorial: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Inter', Arial, sans-serif;
+  --color-hero-shade: #171714;
+  --font-editorial: 'Montserrat', Arial, sans-serif;
+  --font-sans: 'Montserrat', Arial, sans-serif;
 }
 
 :root { font-family: var(--font-sans); color: var(--color-graphite); background: var(--color-ivory); font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
@@ -46,9 +47,46 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
 .skip-link { position: fixed; z-index: 100; top: 12px; left: 12px; padding: 14px 20px; background: var(--color-ivory); color: var(--color-ocean-deep); transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
 .hero { position: relative; isolation: isolate; color: var(--color-ivory); background: var(--color-ocean-deep); min-height: min(900px, 100svh); overflow: clip; }
+/* Two additive alpha masks keep the tear depth independent of hero height.
+   The mask clips the actual media; no painted divider or repeating tile. */
+.hero {
+  --hero-tear-depth: clamp(56px, 7vw, 100px);
+  min-height: 100svh;
+  padding-bottom: var(--hero-tear-depth);
+  -webkit-mask-image: linear-gradient(black, black), url('/media/hero-torn-edge.svg');
+  mask-image: linear-gradient(black, black), url('/media/hero-torn-edge.svg');
+  -webkit-mask-size: 100% calc(100% - var(--hero-tear-depth) + 1px), 100% var(--hero-tear-depth);
+  mask-size: 100% calc(100% - var(--hero-tear-depth) + 1px), 100% var(--hero-tear-depth);
+  -webkit-mask-position: top, bottom;
+  mask-position: top, bottom;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
 .hero > .hero-art { position: absolute; inset: 0; z-index: -2; }
-.hero-art img { object-position: center 65%; }
+.hero-art img { object-position: center 50%; }
 .hero-art .media-label { display: none; }
+/* Neutral contrast follows the text areas without tinting the photograph blue. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--color-hero-shade) 78%, transparent) 0%,
+      color-mix(in srgb, var(--color-hero-shade) 64%, transparent) 44%,
+      color-mix(in srgb, var(--color-hero-shade) 12%, transparent) 80%,
+      transparent 100%),
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--color-hero-shade) 64%, transparent),
+      transparent 25%, transparent 75%,
+      color-mix(in srgb, var(--color-hero-shade) 42%, transparent));
+}
+.hero-content, .hero > .site-header, .hero-bottom {
+  text-shadow: 0 1px 3px color-mix(in srgb, var(--color-hero-shade) 40%, transparent);
+}
+
 .site-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; width: min(100% - 10vw, 1340px); margin-inline: auto; padding-block: 30px; border-bottom: 1px solid color-mix(in srgb, var(--color-ivory) 20%, transparent); }
 .wordmark { font-family: var(--font-editorial); font-size: 2.65rem; letter-spacing: -.05em; line-height: .9; white-space: nowrap; }
 .wordmark span { display: block; font-family: var(--font-sans); font-size: .48rem; letter-spacing: .25em; text-align: center; margin-top: 12px; }
@@ -64,7 +102,18 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
 .hero h1 em { color: var(--color-sand); }
 .hero-description { font-size: .85rem; margin-top: 25px; line-height: 1.8; }
 .hero-actions { display: flex; align-items: center; gap: 46px; margin-top: 25px; }
-.hero-actions .booking-link { border: 1px solid color-mix(in srgb, var(--color-ivory) 55%, transparent); padding-inline: 20px; }
+.hero-actions .booking-link {
+  border: 1px solid var(--color-ivory);
+  padding-inline: 20px;
+  background: var(--color-ivory);
+  color: var(--color-ocean-dark);
+  text-shadow: none;
+}
+.hero-actions .booking-link:hover {
+  background: var(--color-sand);
+  border-color: var(--color-sand);
+  opacity: 1;
+}
 .hero-bottom { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 55px; }
 .hero-index { font-size: .63rem; letter-spacing: .1em; }
 .film-note { display: grid; grid-template-columns: 38px auto; font-size: .68rem; line-height: 1.6; }
@@ -72,7 +121,7 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
 .film-note > span:last-child { font-size: .58rem; opacity: .8; }
 .film video { width: min(100%, 520px); max-height: 320px; }
 .hero-art-label { position: absolute; bottom: 15px; right: 5vw; font-size: .56rem; color: var(--color-ivory); }
-.preview-notice { padding: 14px 6vw; background: var(--color-sand); font-size: .67rem; color: var(--color-muted); text-align: center; line-height: 1.8; }
+.preview-notice { padding: 14px 6vw; background: var(--color-ivory); font-size: .67rem; color: var(--color-muted); text-align: center; line-height: 1.8; }
 .about-heading-row { display: flex; align-items: end; justify-content: space-between; gap: 45px; }
 .editorial-composition { display: grid; grid-template-columns: 42% 20% 1fr; grid-template-rows: 90px 250px 200px 70px; margin-top: 58px; position: relative; }
 .media-frame { position: relative; overflow: hidden; background: var(--color-sand); min-width: 0; }
@@ -171,7 +220,7 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
 }
 
 @media (max-width: 899px) {
-  .hero { min-height: auto; }
+  .hero { min-height: 100svh; }
   .site-header { position: relative; padding-block: 24px; }
   .wordmark { font-size: 2.3rem; }
   .menu-toggle { display: flex; align-items: center; gap: 16px; min-height: 48px; padding-inline: 8px; font-size: .75rem; }
@@ -198,7 +247,7 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
   .section-space { padding-block: 72px; }
   .eyebrow { font-size: .61rem; margin-bottom: 22px; letter-spacing: .14em; }
   .site-header { width: calc(100% - 40px); }
-  .hero-art img { object-position: 52% 65%; }
+  .hero-art img { object-position: 52% 50%; }
   .hero-content { padding-top: 75px; padding-bottom: 40px; }
   .hero-content .eyebrow { gap: 12px; font-size: .58rem; }
   .hero h1 { font-size: clamp(3.1rem, 10.8vw, 4.8rem); }
@@ -261,4 +310,55 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -3px); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   a:hover .arrow, button:hover .arrow { transform: none; }
+}
+
+/* Only the photograph moves: the paper silhouette stays fixed to the hero.
+   Browsers without scroll timelines retain the static photograph. */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    .hero-art img {
+      animation: hero-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 100svh;
+    }
+    @keyframes hero-parallax {
+      from { transform: translateY(0) scale(1.06); }
+      to { transform: translateY(24px) scale(1.06); }
+    }
+  }
+}
+
+/* Fit the whole composition, including the tear, inside one desktop viewport.
+   Height-based spacing prevents wide notebook screens adding vertical padding. */
+@media (min-width: 900px) {
+  .hero {
+    height: 100svh;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .hero > .site-header { padding-block: clamp(16px, 3svh, 30px); }
+  .hero-content {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-block: clamp(12px, 3svh, 32px);
+  }
+  .hero-content .eyebrow { margin-bottom: clamp(12px, 2.5svh, 26px); }
+  .hero h1 { font-size: clamp(3rem, min(7vw, 10svh), 6.5rem); }
+  .hero-description { margin-top: clamp(12px, 2.5svh, 25px); }
+  .hero-actions { margin-top: clamp(12px, 2.5svh, 25px); }
+  .hero-bottom { padding-bottom: clamp(12px, 2svh, 22px); }
+  .hero-art-label { bottom: calc(var(--hero-tear-depth) + 4px); }
+}
+
+@media (min-width: 900px) and (max-height: 600px) {
+  .hero { --hero-tear-depth: 44px; }
+  .hero > .site-header { padding-block: 12px; }
+  .hero h1 { font-size: clamp(2rem, min(5vw, 8svh), 3rem); }
+  .hero-content .eyebrow { margin-bottom: 10px; }
+  .hero-description, .hero-actions { margin-top: 10px; }
+  .hero-bottom { padding-bottom: 8px; }
 }

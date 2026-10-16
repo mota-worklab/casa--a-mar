@@ -6,11 +6,6 @@ Desenvolver um site institucional de alta qualidade visual para **Casa Amar**, u
 
 **Princípio central:** construir uma experiência editorial, cinematográfica e praiana — **não** um catálogo imobiliário genérico nem uma landing page feita de cartões retangulares repetitivos.
 
-### Fontes de verdade
-
-1. Informações verificadas e materiais reais fornecidos pelo proprietário (fotos, vídeos, comodidades, regras, localização e contato).
-2. Protótipo editável no Figma: https://www.figma.com/design/uw4RyfxodtnV2ZSYPnwVqG?node-id=1-2
-3. Este arquivo, para padrões de engenharia e direcionamento de experiência.
 
 O Figma é uma **referência estrutural inicial**, não uma especificação visual final pixel-perfect: refinar composições e acabamento mantendo a intenção. Em conflitos de conteúdo, prevalecem os dados confirmados pelo proprietário. Não inventar quantidade de quartos, capacidade, distância da praia, preços, comodidades, avaliações ou disponibilidade.
 

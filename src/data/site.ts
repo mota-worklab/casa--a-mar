@@ -39,7 +39,7 @@ export const media: MediaItem[] = [
 export const heroMedia: MediaItem = {
   id: 'hero', title: 'Um olhar sobre a Casa Amar',
   alt: 'Fachada da Casa Amar com piscina, espreguiçadeiras e palmeiras sob o céu azul',
-  src: '/media/casa-amar-hero.png', poster: '/media/placeholder-coast.svg',
+  src: '/media/casa-tropical-moderna-piscina.png', poster: '/media/placeholder-coast.svg',
   provisional: false,
 };
 
