@@ -1,9 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { site } from '../data/site';
 import App from './App';
 
 describe('experiência Casa Amar', () => {
+  const originalPhone = site.whatsapp;
+  beforeEach(() => { site.whatsapp = ''; });
+  afterEach(() => { site.whatsapp = originalPhone; });
   it('apresenta a casa sem telefone fictício ou atributos não confirmados', () => {
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('O tempo passa mais devagar aqui.');
@@ -34,12 +38,11 @@ describe('experiência Casa Amar', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('permite consultar as informações práticas pelo teclado', async () => {
+  it('permite expandir as informações práticas', async () => {
     const user = userEvent.setup();
     render(<App />);
     const question = screen.getByText('Como consultar a disponibilidade?');
-    question.focus();
-    await user.keyboard('{Enter}');
+    await user.click(question);
     expect(question.closest('details')).toHaveAttribute('open');
   });
 });

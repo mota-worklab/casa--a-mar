@@ -2,23 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import type { MediaItem } from '../../data/site';
 import { Media } from './Media';
 
-interface GalleryProps { items: MediaItem[]; onClose: () => void }
+interface GalleryProps { items: MediaItem[]; onClose: () => void; returnFocusTo: HTMLElement }
 
-export default function Gallery({ items, onClose }: GalleryProps) {
+export default function Gallery({ items, onClose, returnFocusTo }: GalleryProps) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const element = dialog.current;
+    if (!element) return;
     const previousOverflow = document.body.style.overflow;
     element?.showModal();
     document.body.style.overflow = 'hidden';
     return () => {
       element?.close();
       document.body.style.overflow = previousOverflow;
-      active?.focus();
+      returnFocusTo.focus();
     };
-  }, []);
+  }, [returnFocusTo]);
   const move = (step: number) => setIndex((current) => (current + step + items.length) % items.length);
   if (!items.length) return null;
   return <dialog ref={dialog} className="gallery-dialog" aria-labelledby="gallery-title"

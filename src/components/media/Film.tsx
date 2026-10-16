@@ -6,9 +6,9 @@ export function Film({ item }: { item: MediaItem }) {
   const [failed, setFailed] = useState(false);
   if (!item.videoSrc) return <p className="film-note"><span aria-hidden="true">◌</span> Filme da casa em breve<span>Vídeo real a inserir</span></p>;
   return <div className="film">
-    {playing && !failed ? <video controls playsInline preload="none" poster={item.src ?? item.poster}
+    {playing && !failed ? <video controls playsInline preload="none" poster={item.src ?? item.poster} src={item.videoSrc}
       aria-label={item.title} onError={() => setFailed(true)}>
-      <source src={item.videoSrc} />Seu navegador não suporta vídeo.
+      Seu navegador não suporta vídeo.
     </video> : <button type="button" className="text-link" onClick={() => { setFailed(false); setPlaying(true); }}>Assistir ao filme <span aria-hidden="true">▷</span></button>}
     {failed && <p role="status">O vídeo não pôde ser carregado. Você pode tentar novamente.</p>}
   </div>;

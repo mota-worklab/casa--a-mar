@@ -13,11 +13,18 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     }
     await page.getByRole('button', { name: 'Explorar a galeria' }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
+    await page.getByRole('button', { name: 'Fechar galeria' }).focus();
+    await page.keyboard.press('Shift+Tab');
+    await expect(page.getByRole('button', { name: 'Próxima imagem' })).toBeFocused();
     await page.keyboard.press('ArrowRight');
     await expect(page.getByText('2 / 5')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Explorar a galeria' })).toBeFocused();
+    const question = page.locator('summary').first();
+    await question.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('details').first()).toHaveAttribute('open', '');
     await page.screenshot({ path: `test-results/casa-amar-${width}.png`, fullPage: true });
   });
 }

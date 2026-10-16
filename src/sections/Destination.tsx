@@ -1,5 +1,6 @@
 import { destinationMedia, site } from '../data/site';
 import { Media } from '../components/media/Media';
+import { Film } from '../components/media/Film';
 import { Arrow } from '../components/ui/Arrow';
 
 export function Destination() {
@@ -12,6 +13,7 @@ export function Destination() {
     </div><div className="destination-visual"><Media item={destinationMedia} />
       <span className="destination-stamp" aria-hidden="true">BAHIA<br /><em>com afeto</em></span>
       <p>{site.location} <span>Um convite a desacelerar</span></p>
+      {destinationMedia.videoSrc && <Film item={destinationMedia} />}
     </div></div>
   </section>;
 }
