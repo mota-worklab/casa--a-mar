@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
+  <title>Ondas abstratas — ilustração provisória</title>
+  <defs><linearGradient id="water" x2=".9" y2="1"><stop stop-color="#145B69"/><stop offset="1" stop-color="#2DADB2"/></linearGradient></defs>
+  <path fill="url(#water)" d="M0 0h1200v1500H0z"/>
+  <path d="M-200 500c300-200 350 300 700 50s530-90 850-250M-200 650c300-200 350 300 700 50s530-90 850-250M-200 800c300-200 350 300 700 50s530-90 850-250M-200 950c300-200 350 300 700 50s530-90 850-250M-200 1100c300-200 350 300 700 50s530-90 850-250" fill="none" stroke="#FAF9F5" stroke-width="2" opacity=".24"/>
+  <circle cx="880" cy="300" r="115" fill="#F3EEE4" opacity=".75"/>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <title>Sol e areia abstratos — ilustração provisória</title>
+  <path fill="#E4D6BD" d="M0 0h1200v1200H0z"/>
+  <circle cx="780" cy="380" r="190" fill="#FAF9F5"/>
+  <path fill="#D9C7A5" d="M0 750c400-600 580 170 1200-110v560H0z"/>
+  <path fill="#D98870" opacity=".5" d="M0 1000c500-500 730-100 1200-180v380H0z"/>
+  <path d="M0 780c400-600 580 170 1200-110" fill="none" stroke="#FAF9F5" stroke-width="3"/>
+</svg>
