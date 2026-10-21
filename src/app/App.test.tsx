@@ -1,19 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { site } from '../data/site';
+import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('experiência Casa Amar', () => {
-  const originalPhone = site.whatsapp;
-  beforeEach(() => { site.whatsapp = ''; });
-  afterEach(() => { site.whatsapp = originalPhone; });
-  it('apresenta a casa sem telefone fictício ou atributos não confirmados', () => {
+  it('apresenta as comodidades confirmadas e os contatos oficiais', () => {
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('O tempo passa mais devagar aqui.');
-    expect(screen.getByText(/Versão de apresentação/)).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: /Consultar disponibilidade/ })[0]).toHaveAttribute('href', '#reservas');
-    expect(screen.getByText(/contato oficial será disponibilizado/i)).toBeInTheDocument();
+    expect(screen.getByText('5 suítes climatizadas')).toBeInTheDocument();
+    expect(screen.getByText(/roupas de cama e banho não estão inclusas/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /75 99926-9950/ })).toHaveAttribute('href', 'tel:+5575999269950');
+    expect(screen.getByRole('link', { name: /@casaamarguaibim/ })).toHaveAttribute('href', 'https://www.instagram.com/casaamarguaibim/');
   });
 
   it('abre o menu e fecha ao selecionar uma seção', async () => {
@@ -31,9 +28,9 @@ describe('experiência Casa Amar', () => {
     render(<App />);
     await user.click(screen.getByRole('button', { name: 'Explorar a galeria' }));
     expect(await screen.findByRole('dialog', { name: 'Galeria da Casa Amar' })).toBeInTheDocument();
-    expect(screen.getByText('1 / 5')).toBeInTheDocument();
+    expect(screen.getByText('1 / 6')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Próxima imagem' }));
-    expect(screen.getByText('2 / 5')).toBeInTheDocument();
+    expect(screen.getByText('2 / 6')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Fechar galeria' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });

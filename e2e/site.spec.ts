@@ -17,7 +17,7 @@ for (const width of [320, 375, 768, 1024, 1440]) {
     await page.keyboard.press('Shift+Tab');
     await expect(page.getByRole('button', { name: 'Próxima imagem' })).toBeFocused();
     await page.keyboard.press('ArrowRight');
-    await expect(page.getByText('2 / 5')).toBeVisible();
+    await expect(page.getByText('2 / 6')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Explorar a galeria' })).toBeFocused();

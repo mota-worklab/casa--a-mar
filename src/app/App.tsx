@@ -2,7 +2,7 @@ import { lazy, Suspense, useState } from 'react';
 import { Footer } from '../components/layout/Footer';
 import { GalleryBoundary } from '../components/media/GalleryBoundary';
 import { BookingLink } from '../components/ui/BookingLink';
-import { media } from '../data/site';
+import { galleryMedia } from '../data/site';
 import { Hero } from '../sections/Hero';
 import { About } from '../sections/About';
 import { Spaces } from '../sections/Spaces';
@@ -19,7 +19,6 @@ export default function App() {
     <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
     <Hero />
     <main id="conteudo">
-      <aside className="preview-notice" aria-label="Sobre esta apresentação">Versão de apresentação · Ilustrações provisórias. Fotos, vídeos e detalhes da estadia em confirmação.</aside>
       <About />
       <Spaces onOpenGallery={setGalleryTrigger} />
       <Destination />
@@ -31,7 +30,7 @@ export default function App() {
     <BookingLink className="mobile-booking" />
     {galleryTrigger && <GalleryBoundary onDismiss={() => { galleryTrigger.focus(); setGalleryTrigger(null); }}>
       <Suspense fallback={<p className="gallery-loading" role="status">Abrindo galeria…</p>}>
-        <Gallery items={media} returnFocusTo={galleryTrigger} onClose={() => setGalleryTrigger(null)} />
+        <Gallery items={galleryMedia} returnFocusTo={galleryTrigger} onClose={() => setGalleryTrigger(null)} />
       </Suspense>
     </GalleryBoundary>}
   </>;

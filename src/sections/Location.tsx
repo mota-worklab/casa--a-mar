@@ -10,5 +10,8 @@ export function Location() {
       <a className="text-link" href={site.exactMapUrl || site.regionMapUrl} target="_blank" rel="noopener noreferrer">{exact ? 'Ver localização da casa' : 'Ver Guaibim no mapa'} <Arrow /><span className="sr-only"> (abre em nova aba)</span></a>
       {!exact && <small>O mapa indica a região, não a localização da casa.</small>}
     </div>
+    <div className="location-map">
+      <iframe title="Mapa da região de Guaibim, Bahia" src={site.regionMapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+    </div>
   </section>;
 }

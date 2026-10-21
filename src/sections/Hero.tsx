@@ -15,6 +15,6 @@ export function Hero() {
       <p className="hero-description">Um convite para chegar, respirar<br className="desktop-break" /> e deixar a vida acontecer.</p>
       <div className="hero-actions"><a className="text-link" href="#a-casa">Explore a casa <Arrow down /></a><BookingLink /></div>
     </div>
-  </section>;    <div className="hero-bottom page-shell"><span className="hero-index">01 — Um novo ritmo</span><Film item={heroMedia} /></div>
+  </section>;   
 
 }

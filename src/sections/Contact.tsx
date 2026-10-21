@@ -13,6 +13,10 @@ export function Contact() {
         <span>O contato oficial será disponibilizado em breve para consultas de disponibilidade.</span>
       </div>}
       {url && <small>Converse diretamente com a casa pelo WhatsApp.</small>}
+      <div className="contact-details">
+        <a href="tel:+5575999269950">☎ 75 99926-9950</a>
+        <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram @casaamarguaibim<span className="sr-only"> (abre em nova aba)</span></a>
+      </div>
     </div>
   </section>;
 }
