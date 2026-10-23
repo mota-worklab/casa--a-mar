@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { Footer } from '../components/layout/Footer';
 import { GalleryBoundary } from '../components/media/GalleryBoundary';
 import { BookingLink } from '../components/ui/BookingLink';
@@ -14,16 +15,21 @@ import { Contact } from '../sections/Contact';
 const Gallery = lazy(() => import('../components/media/Gallery'));
 
 export default function App() {
+  const revealRef = useScrollReveal();
   const [galleryTrigger, setGalleryTrigger] = useState<HTMLButtonElement | null>(null);
   return <>
     <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
     <Hero />
-    <main id="conteudo">
-      <About />
-      <Spaces onOpenGallery={setGalleryTrigger} />
+    <main id="conteudo" ref={revealRef}>
+      <div className="shoreline">
+        <About />
+        <Spaces onOpenGallery={setGalleryTrigger} />
+      </div>
       <Destination />
-      <Location />
-      <FAQ />
+      <div className="shoreline shoreline--quiet">
+        <Location />
+        <FAQ />
+      </div>
       <Contact />
     </main>
     <Footer />

@@ -1,0 +1,98 @@
+.location-flight {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  align-items: center;
+  gap: clamp(40px, 8vw, 120px);
+  border-block: 1px solid color-mix(in srgb, var(--color-ocean-deep) 18%, transparent);
+  padding-block: clamp(60px, 7vw, 100px);
+}
+
+.location-flight-copy { max-width: 560px; }
+.location-flight-copy h3 {
+  color: var(--color-ocean-deep);
+  font-size: clamp(2.6rem, 4.5vw, 4.6rem);
+  letter-spacing: -.045em;
+}
+.location-flight-copy > p:not(.eyebrow) {
+  color: var(--color-muted);
+  font-size: .85rem;
+  max-width: 420px;
+  margin-top: 25px;
+}
+.location-flight-path {
+  list-style: none;
+  margin: 34px 0 0 5px;
+  padding: 0 0 0 27px;
+  border-left: 1px solid var(--color-turquoise);
+}
+.location-flight-path li {
+  position: relative;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  min-height: 48px;
+  color: var(--color-ocean-deep);
+  font-size: .78rem;
+}
+.location-flight-path li::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-turquoise);
+}
+.location-flight-path li span {
+  color: var(--color-muted);
+  font-size: .6rem;
+  letter-spacing: .12em;
+}
+.location-flight-copy small {
+  display: block;
+  max-width: 390px;
+  margin-top: 27px;
+  color: var(--color-muted);
+  font-size: .64rem;
+  line-height: 1.7;
+}
+
+.location-flight-visual {
+  --cut-corner: clamp(42px, 6vw, 72px);
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - var(--cut-corner)) 0, 100% var(--cut-corner), 100% 100%, 0 100%);
+  background: var(--color-sand);
+}
+.location-flight-visual video,
+.location-flight-visual .media-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.location-flight-visual [role="status"] {
+  position: absolute;
+  inset-inline: 14px;
+  bottom: 66px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: var(--color-ocean-deep);
+  color: var(--color-ivory);
+  text-align: center;
+  font-size: .65rem;
+}
+
+@media (max-width: 700px) {
+  .location-flight {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding-block: 55px;
+  }
+  .location-flight-copy h3 { font-size: clamp(2.6rem, 8vw, 3.7rem); }
+  .location-flight-visual { width: min(78vw, 360px); }
+}

@@ -35,7 +35,7 @@ export const media: MediaItem[] = [
   { id: 'detalhes', title: 'Um instante à beira da piscina', alt: 'Guarda-sol, cadeiras e piscina no pátio da Casa Amar', poster: '/media/placeholder-sand.svg', src: '/media/patio-casa-amar.jpeg', objectPosition: 'center 62%', provisional: false },
   { id: 'paisagem', title: 'O mar de Guaibim', alt: 'Mar e faixa de areia da praia de Guaibim', poster: '/media/placeholder-coast.svg', src: '/media/praia-guaibim-mar.webp', provisional: false },
   { id: 'convivencia', title: 'Tempo de estar junto', alt: 'Área de convivência da Casa Amar', poster: '/media/placeholder-sand.svg', provisional: true },
-  { id: 'descanso', title: 'Uma pausa só sua', alt: 'Ambiente de descanso da Casa Amar', poster: '/media/placeholder-ocean.svg', provisional: true },
+  { id: 'descanso', title: 'Uma pausa só sua', alt: 'Quarto da Casa Amar com cama arrumada e luz natural pela janela', poster: '/media/placeholder-ocean.svg', src: '/media/quarto-casa-amar.webp', objectPosition: '52% center', provisional: false },
 ];
 
 export const heroMedia: MediaItem = {
@@ -48,6 +48,13 @@ export const heroMedia: MediaItem = {
 export const destinationMedia: MediaItem = {
   id: 'destino', title: 'Palmeiras à beira-mar', alt: 'Palmeiras, vegetação e mar na paisagem de Guaibim',
   poster: '/media/placeholder-ocean.svg', src: '/media/palmeiras-guaibim.jpeg', objectPosition: 'center 68%', provisional: false,
+};
+
+export const arrivalMedia: MediaItem = {
+  id: 'chegada', title: 'Voo de chegada à Casa Amar',
+  alt: 'Vista aérea da Casa Amar, com piscina, casas do entorno e o mar ao fundo',
+  poster: '/media/voo-chegada-casa-amar.webp', src: '/media/voo-chegada-casa-amar.webp',
+  videoSrc: '/media/voo-chegada-casa-amar.mp4', provisional: false,
 };
 
 export const galleryMedia = [...media, destinationMedia];
