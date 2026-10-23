@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 1200" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="tide-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset=".1" stop-color="white"/>
+      <stop offset=".9" stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#tide-fade)">
+    <path d="M0 0C0 80 12 140 38 210S72 275 55 330S30 430 62 510S95 575 68 650S30 760 57 845S90 940 64 1020S0 1120 0 1200Z"/>
+  </g>
+  <path d="M0 0C0 80 30 140 56 210S90 275 73 330S48 430 80 510S113 575 86 650S48 760 75 845S108 940 82 1020S0 1120 0 1200" fill="none" stroke="url(#tide-fade)" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+</svg>

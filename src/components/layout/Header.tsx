@@ -5,16 +5,28 @@ import { BookingLink } from '../ui/BookingLink';
 export function Header() {
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!open) return;
     const close = (event: KeyboardEvent) => {
       if (event.key === 'Escape') { setOpen(false); toggle.current?.focus(); }
     };
+    const onOutside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !headerRef.current?.contains(event.target)) setOpen(false);
+    };
+    const desktop = window.matchMedia('(min-width: 900px)');
+    const onResize = () => { if (desktop.matches) setOpen(false); };
+    document.addEventListener('pointerdown', onOutside);
+    desktop.addEventListener('change', onResize);
     document.addEventListener('keydown', close);
-    return () => document.removeEventListener('keydown', close);
+    return () => {
+      document.removeEventListener('keydown', close);
+      document.removeEventListener('pointerdown', onOutside);
+      desktop.removeEventListener('change', onResize);
+    };
   }, [open]);
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <a className="wordmark" href="#inicio" aria-label="Casa Amar — início">casa amar<span>GUAIBIM · BAHIA</span></a>
       <button ref={toggle} type="button" className="menu-toggle" aria-expanded={open} aria-controls="main-navigation"
         aria-label={open ? 'Fechar menu' : 'Abrir menu'} onClick={() => setOpen(!open)}>
