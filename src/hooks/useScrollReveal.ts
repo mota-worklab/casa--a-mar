@@ -12,7 +12,7 @@ export function useScrollReveal() {
 
     // Avoid nested filters, which multiply blur and create competing transforms.
     const candidates = Array.from(container.querySelectorAll<HTMLElement>(revealSelector));
-    const targets = candidates.filter(element => !candidates.some(parent => parent !== element && parent.contains(element)));
+    const targets = candidates.filter(element => !element.closest('[data-editorial-gallery]') && !candidates.some(parent => parent !== element && parent.contains(element)));
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) {
         if (entry.isIntersecting) {

@@ -1,14 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import App from './App';
+
+vi.mock('../components/media/editorialMotion', () => ({ mountEditorialMotion: () => () => {} }));
 
 describe('experiência Casa Amar', () => {
   it('apresenta as comodidades confirmadas e os contatos oficiais', () => {
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('O tempo passa mais devagar aqui.');
     expect(screen.getByText('5 suítes climatizadas')).toBeInTheDocument();
-    expect(screen.getByText(/roupas de cama e banho não estão inclusas/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Para trazer:/i)).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /75 99926-9950/ })).toHaveAttribute('href', 'tel:+5575999269950');
     expect(screen.getByRole('link', { name: /@casaamarguaibim/ })).toHaveAttribute('href', 'https://www.instagram.com/casaamarguaibim/');
   });
@@ -28,11 +30,20 @@ describe('experiência Casa Amar', () => {
     render(<App />);
     await user.click(screen.getByRole('button', { name: 'Explorar a galeria' }));
     expect(await screen.findByRole('dialog', { name: 'Galeria da Casa Amar' })).toBeInTheDocument();
-    expect(screen.getByText('1 / 6')).toBeInTheDocument();
+    expect(screen.getByText('1 / 16')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Próxima imagem' }));
-    expect(screen.getByText('2 / 6')).toBeInTheDocument();
+    expect(screen.getByText('2 / 16')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Fechar galeria' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('abre a fotografia selecionada na composição editorial', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('button', { name: 'Ver na galeria — Pátio e piscina' }));
+    expect(await screen.findByRole('dialog', { name: 'Galeria da Casa Amar' })).toBeInTheDocument();
+    expect(screen.getByText('Pátio e piscina')).toBeInTheDocument();
+    expect(screen.getByText('7 / 16')).toBeInTheDocument();
   });
 
   it('permite expandir as informações práticas', async () => {

@@ -10,7 +10,7 @@ function titleLetters(text: string, start: number) {
   return text.split(' ').map((word, wordIndex) => {
     const letters = Array.from(word).map(letter => {
       const order = index++;
-      return <span className="hero-title-letter" key={order} style={{ animationDelay: (100 + order * 28) + 'ms' }}>{letter}</span>;
+      return <span className="hero-title-letter" key={order} style={{ animationDelay: (1100 + order * 28) + 'ms' }}>{letter}</span>;
     });
     index++;
     return <span key={wordIndex}>{wordIndex > 0 && ' '}<span className="hero-title-word">{letters}</span></span>;

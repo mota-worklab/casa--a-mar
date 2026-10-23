@@ -7,7 +7,7 @@ for (const width of [320, 375, 390, 430, 768]) {
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    for (const selector of ['.hero-description', '.section-copy', '.space-caption p', '.amenity-group li', '.faq summary', '.faq details p']) {
+    for (const selector of ['.hero-description', '.section-copy', '.space-caption p', '.amenity-group li', '.faq summary', '.faq details p', '.local-experiences-list p', '.local-experiences-heading .section-copy', '.editorial-gallery-description', '.location-flight-copy > p:not(.eyebrow)']) {
       for (const element of await page.locator(selector).all()) {
         expect(await element.evaluate(el => parseFloat(getComputedStyle(el).fontSize))).toBeGreaterThanOrEqual(15);
       }
@@ -18,10 +18,13 @@ for (const width of [320, 375, 390, 430, 768]) {
       expect(box!.x).toBeGreaterThanOrEqual(0);
       expect(box!.x + box!.width).toBeLessThanOrEqual(width);
     }
-    if (width < 700) {
+    if (width < 768) {
       const sticky = await page.locator('.mobile-booking').boundingBox();
       expect(sticky!.y + sticky!.height).toBeLessThanOrEqual(812);
     }
+    await page.getByRole('button', { name: 'Abrir menu' }).click();
+    await page.locator('#conteudo').click({ position: { x: 2, y: 2 }, force: true });
+    await expect(page.getByRole('button', { name: 'Abrir menu' })).toHaveAttribute('aria-expanded', 'false');
     await page.getByRole('button', { name: 'Abrir menu' }).click();
     await page.getByRole('link', { name: 'Ambientes', exact: true }).click();
     await page.getByRole('button', { name: 'Explorar a galeria' }).click();

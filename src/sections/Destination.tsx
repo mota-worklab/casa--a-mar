@@ -11,7 +11,6 @@ export function Destination() {
       <p>O destino é Guaibim, na Bahia.<br />O convite é encontrar o seu próprio ritmo.</p>
       <a className="text-link" href="#localizacao">Conheça a região <Arrow /></a>
     </div><div className="destination-visual"><Media item={destinationMedia} />
-      <span className="destination-stamp" aria-hidden="true">BAHIA<br /><em>com afeto</em></span>
       <p>{site.location} <span>Um convite a desacelerar</span></p>
       {destinationMedia.videoSrc && <Film item={destinationMedia} />}
     </div></div>

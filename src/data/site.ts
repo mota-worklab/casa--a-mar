@@ -31,11 +31,11 @@ export const navigation = [
 // Substitua pelos arquivos do proprietário e marque provisional: false apenas
 // após confirmar a origem, autorização e correspondência com cada ambiente.
 export const media: MediaItem[] = [
-  { id: 'casa', title: 'A casa entre o jardim', alt: 'Casa Amar vista sob a pérgola florida e as palmeiras do jardim', poster: '/media/placeholder-ocean.svg', src: '/media/pergolado-casa-amar.jpeg', objectPosition: 'center center', provisional: false },
+  { id: 'casa', title: 'Balanços no jardim da Casa Amar', alt: 'Balanços sob o pergolado florido, com o jardim e a Casa Amar ao fundo', poster: '/media/placeholder-ocean.svg', src: '/media/balancos-casa-amar-1600.webp', srcSet: '/media/balancos-casa-amar-800.webp 800w, /media/balancos-casa-amar-1600.webp 1600w', objectPosition: 'center center', provisional: false },
   { id: 'detalhes', title: 'Um instante à beira da piscina', alt: 'Guarda-sol, cadeiras e piscina no pátio da Casa Amar', poster: '/media/placeholder-sand.svg', src: '/media/patio-casa-amar.jpeg', objectPosition: 'center 62%', provisional: false },
-  { id: 'paisagem', title: 'O mar de Guaibim', alt: 'Mar e faixa de areia da praia de Guaibim', poster: '/media/placeholder-coast.svg', src: '/media/praia-guaibim-mar.webp', provisional: false },
-  { id: 'convivencia', title: 'Tempo de estar junto', alt: 'Área de convivência da Casa Amar', poster: '/media/placeholder-sand.svg', provisional: true },
-  { id: 'descanso', title: 'Uma pausa só sua', alt: 'Quarto da Casa Amar com cama arrumada e luz natural pela janela', poster: '/media/placeholder-ocean.svg', src: '/media/quarto-casa-amar.webp', objectPosition: '52% center', provisional: false },
+  { id: 'paisagem', title: 'O mar de Guaibim', alt: 'Praia de Guaibim entre coqueiros e vegetação costeira, sob céu azul com nuvens', poster: '/media/placeholder-coast.svg', src: '/media/praia-guaibim-ceu-coqueiros-1600.webp', srcSet: '/media/praia-guaibim-ceu-coqueiros-800.webp 800w, /media/praia-guaibim-ceu-coqueiros-1600.webp 1600w', objectPosition: 'center 60%', provisional: false },
+  { id: 'convivencia', title: 'Tempo de estar junto', alt: 'Sala de estar da Casa Amar com sofá de fibra trançada, televisão e cortinas claras', poster: '/media/placeholder-sand.svg', src: '/media/sala-estar-casa-amar.jpeg', objectPosition: 'center 58%', provisional: false },
+  { id: 'descanso', title: 'Uma pausa só sua', alt: 'Quarto da Casa Amar com cama arrumada e luz natural pela janela', poster: '/media/placeholder-ocean.svg', src: '/media/quarto-casa-amar-1448.webp', srcSet: '/media/quarto-casa-amar-720.webp 720w, /media/quarto-casa-amar-1448.webp 1448w', objectPosition: '52% center', provisional: false },
 ];
 
 export const heroMedia: MediaItem = {
@@ -59,11 +59,13 @@ export const arrivalMedia: MediaItem = {
 
 export const galleryMedia = [...media, destinationMedia];
 
-export const amenityGroups = [
-  { title: 'Conforto', items: ['5 suítes climatizadas', '6 banheiros no total'] },
-  { title: 'Convivência', items: ['Sala de estar e jantar integradas à cozinha', 'Terraço', 'Pergolado com balanço e rede'] },
-  { title: 'Lazer', items: ['Piscina', 'Área gourmet com churrasqueira e lavabo', 'Chuveirão ao ar livre', 'Próxima à praia'] },
-  { title: 'Estrutura', items: ['Cozinha completa e área de serviço', 'Utensílios domésticos', 'TV e internet Wi-Fi', 'Área para até 5 carros'] },
+export type AmenityIconName = 'bed' | 'bath' | 'sofa' | 'terrace' | 'hammock' | 'pool' | 'grill' | 'shower' | 'beach' | 'kitchen' | 'utensils' | 'wifi' | 'car';
+
+export const amenityGroups: { title: string; items: { label: string; icon: AmenityIconName }[] }[] = [
+  { title: 'Conforto', items: [{ label: '5 suítes climatizadas', icon: 'bed' }, { label: '6 banheiros no total', icon: 'bath' }] },
+  { title: 'Convivência', items: [{ label: 'Sala de estar e jantar integradas à cozinha', icon: 'sofa' }, { label: 'Terraço', icon: 'terrace' }, { label: 'Pergolado com balanço e rede', icon: 'hammock' }] },
+  { title: 'Lazer', items: [{ label: 'Piscina', icon: 'pool' }, { label: 'Área gourmet com churrasqueira e lavabo', icon: 'grill' }, { label: 'Chuveirão ao ar livre', icon: 'shower' }, { label: 'Próxima à praia', icon: 'beach' }] },
+  { title: 'Estrutura', items: [{ label: 'Cozinha completa e área de serviço', icon: 'kitchen' }, { label: 'Utensílios domésticos', icon: 'utensils' }, { label: 'TV e internet Wi-Fi', icon: 'wifi' }, { label: 'Área para até 5 carros', icon: 'car' }] },
 ];
 
 export const questions = [
@@ -72,3 +74,12 @@ export const questions = [
   { question: 'Quais são as comodidades e regras da estadia?', answer: 'A casa tem piscina, área gourmet com churrasqueira, cozinha completa e utensílios domésticos, entre outras comodidades. Roupas de cama e banho não estão inclusas; consulte as demais regras antes da reserva.' },
   { question: 'Onde fica a Casa Amar?', answer: 'A Casa Amar fica em Guaibim, Bahia. O endereço exato, as orientações de chegada e eventuais distâncias serão disponibilizados após aprovação do proprietário.' },
 ];
+
+// Original sea film supplied by the owner; HEVC/AAC, pending web transcode.
+export const seaMedia: MediaItem = {
+  id: 'som-do-mar', title: 'Escute o som do mar',
+  alt: 'O mar e a praia de Guaibim',
+  poster: '/media/praia-guaibim-mar.webp',
+  videoSrc: '/media/som-do-mar.mov',
+  provisional: false,
+};

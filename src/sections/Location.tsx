@@ -1,3 +1,4 @@
+import { SeaDecoration } from '../components/ui/SeaDecoration';
 import { arrivalMedia, site } from '../data/site';
 import { ArrivalFilm } from '../components/media/ArrivalFilm';
 import { Arrow } from '../components/ui/Arrow';
@@ -12,6 +13,7 @@ export function Location() {
       <a className="text-link" href={site.exactMapUrl || site.regionMapUrl} target="_blank" rel="noopener noreferrer">{exact ? 'Ver localização da casa' : 'Ver Guaibim no mapa'} <Arrow /><span className="sr-only"> (abre em nova aba)</span></a>
       {!exact && <small>O mapa indica a região, não a localização da casa.</small>}
     </div>
+    <SeaDecoration motif="fish" className="sea-decoration--location" />
     <div className="location-flight">
       <div className="location-flight-copy">
         <p className="eyebrow">Um voo por Guaibim</p>

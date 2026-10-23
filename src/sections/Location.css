@@ -87,7 +87,7 @@
   font-size: .65rem;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 899px) {
   .location-flight {
     grid-template-columns: 1fr;
     gap: 45px;
@@ -95,4 +95,12 @@
   }
   .location-flight-copy h3 { font-size: clamp(2.6rem, 8vw, 3.7rem); }
   .location-flight-visual { width: min(78vw, 360px); }
+}
+
+@media (max-width: 899px) {
+  .location-flight { gap: 32px; padding-block: 40px; }
+  .location-flight-copy > p:not(.eyebrow) { font-size: .9375rem; line-height: 1.8; }
+  .location-flight-copy small { font-size: .8125rem; }
+  .location-flight-path li { font-size: .9375rem; }
+  .location-flight-visual { width: min(100%, 340px); }
 }

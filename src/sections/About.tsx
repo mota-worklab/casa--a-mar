@@ -1,8 +1,10 @@
+import { SeaDecoration } from '../components/ui/SeaDecoration';
 import { media } from '../data/site';
 import { Media } from '../components/media/Media';
 
 export function About() {
-  return <section id="a-casa" className="about section-space page-shell" aria-labelledby="about-heading">
+  return <section id="a-casa" className="about section-space page-shell sea-decorated" aria-labelledby="about-heading">
+    <SeaDecoration motif="shell" className="sea-decoration--about" />
     <p className="eyebrow">01 / A essência da casa</p>
     <div className="about-heading-row"><h2 id="about-heading">Entre o azul do mar<br />e a calma de <em>estar.</em></h2>
       <p className="section-copy">Uma casa de temporada em Guaibim, Bahia. Um convite para reunir quem você ama e abrir espaço para dias com mais presença.</p>
@@ -14,5 +16,6 @@ export function About() {
         <p>O melhor de uma viagem<br />é poder <em>se sentir em casa.</em></p><span className="handwritten-mark" aria-hidden="true">amar.</span>
       </div>
     </div>
+    <SeaDecoration motif="turtle" className="sea-decoration--after-about" />
   </section>;
 }
