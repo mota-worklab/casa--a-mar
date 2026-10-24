@@ -16,6 +16,13 @@ for (const viewport of [
     if (viewport.width >= 1024) expect(box!.height).toBeLessThanOrEqual(viewport.height + 1);
     const beach = await section.locator('.local-experiences-beach').boundingBox();
     const detail = await section.locator('.local-experiences-detail').boundingBox();
+    if (viewport.width < 768) {
+      expect(beach!.height).toBeGreaterThanOrEqual(250);
+      expect(detail!.height).toBeGreaterThanOrEqual(170);
+      expect(detail!.width).toBeGreaterThanOrEqual(100);
+      const list = await section.locator('.local-experiences-list').boundingBox();
+      expect(list!.y).toBeGreaterThanOrEqual(Math.max(beach!.y + beach!.height, detail!.y + detail!.height) + 20);
+    }
     expect(detail!.x).toBeGreaterThan(beach!.x);
     expect(detail!.x).toBeLessThan(beach!.x + beach!.width);
     expect(detail!.x + detail!.width).toBeGreaterThan(beach!.x + beach!.width);

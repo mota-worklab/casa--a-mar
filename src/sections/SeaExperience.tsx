@@ -15,23 +15,53 @@ export function SeaExperience({ item = seaMedia }: { item?: MediaItem }) {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     let visible = false;
+    let disposed = false;
+    let attempt = 0;
     const syncPlayback = () => {
+      const currentAttempt = ++attempt;
+      const isCurrent = () => !disposed && visible && !document.hidden && !reducedMotion.matches && currentAttempt === attempt;
       if (!visible || document.hidden) { video.pause(); return; }
-      if (!reducedMotion.matches && !saveData) {
-        void video.play().catch(() => setBlocked(true));
-      }
+      if (reducedMotion.matches || saveData) { setBlocked(true); return; }
+      const start = async () => {
+        try {
+          await video.play();
+          if (isCurrent()) setBlocked(false);
+        } catch (error) {
+          if (!isCurrent()) return;
+          const name = error instanceof Error || error instanceof DOMException ? error.name : '';
+          if (name === 'AbortError') return;
+          if (name === 'NotAllowedError' && !video.muted) {
+            // Browsers may permit the picture to autoplay while refusing audible media.
+            video.muted = true;
+            setMuted(true);
+            try {
+              await video.play();
+              if (isCurrent()) setBlocked(false);
+            } catch (fallbackError) {
+              if (!isCurrent()) return;
+              if (fallbackError instanceof DOMException && fallbackError.name === 'NotSupportedError') setFailed(true);
+              else setBlocked(true);
+            }
+          } else if (name === 'NotSupportedError') setFailed(true);
+          else setBlocked(true);
+        }
+      };
+      void start();
     };
-    // Trigger playback near the viewport, keeping the large film off the initial download.
+    // Observe the stable frame, rather than waiting for a large fraction of a tall video.
     const observer = typeof IntersectionObserver !== 'undefined'
       ? new IntersectionObserver(([entry]) => {
-        visible = entry.isIntersecting && entry.intersectionRatio >= .35;
+        visible = entry.isIntersecting && entry.intersectionRatio >= .12;
         syncPlayback();
-      }, { threshold: [0, .35] }) : null;
-    observer?.observe(video);
+      }, { threshold: [0, .12] }) : null;
+    observer?.observe(video.parentElement ?? video);
+    if (!observer) setBlocked(true);
     document.addEventListener('visibilitychange', syncPlayback);
     const onMotionChange = () => { if (reducedMotion.matches) video.pause(); };
     reducedMotion.addEventListener('change', onMotionChange);
     return () => {
+      disposed = true;
+      attempt++;
       observer?.disconnect();
       document.removeEventListener('visibilitychange', syncPlayback);
       reducedMotion.removeEventListener('change', onMotionChange);

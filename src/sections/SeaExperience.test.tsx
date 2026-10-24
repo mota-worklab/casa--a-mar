@@ -1,9 +1,15 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SeaExperience } from './SeaExperience';
 import type { MediaItem } from '../data/site';
 
 const film: MediaItem = { id: 'mar', title: 'Som do mar', alt: 'Ondas do mar', poster: '/poster.webp', videoSrc: '/mar.mp4', provisional: false };
+
+beforeEach(() => {
+  vi.stubGlobal('IntersectionObserver', class { observe() {} disconnect() {} });
+});
+
+afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe('pausa à beira-mar', () => {
   it('conecta o filme recebido sem aviso de produção', () => {
@@ -48,13 +54,53 @@ describe('pausa à beira-mar', () => {
     });
     render(<SeaExperience item={film} />);
     expect(play).not.toHaveBeenCalled();
-    notify([{ isIntersecting: true, intersectionRatio: .6 } as IntersectionObserverEntry], {} as IntersectionObserver);
+    notify([{ isIntersecting: true, intersectionRatio: .2 } as IntersectionObserverEntry], {} as IntersectionObserver);
     expect(play).toHaveBeenCalledOnce();
     notify([{ isIntersecting: false, intersectionRatio: 0 } as IntersectionObserverEntry], {} as IntersectionObserver);
     expect(pause).toHaveBeenCalled();
     vi.unstubAllGlobals();
     play.mockRestore();
     pause.mockRestore();
+  });
+
+
+  it('inicia sem som quando o navegador bloqueia somente o áudio automático', async () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play')
+      .mockRejectedValueOnce(new DOMException('Audio blocked', 'NotAllowedError'))
+      .mockResolvedValue();
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    let notify: IntersectionObserverCallback = () => {};
+    vi.stubGlobal('IntersectionObserver', class {
+      constructor(callback: IntersectionObserverCallback) { notify = callback; }
+      observe() {}
+      disconnect() {}
+    });
+    const { container } = render(<SeaExperience item={film} />);
+    await act(async () => notify([{ isIntersecting: true, intersectionRatio: .2 } as IntersectionObserverEntry], {} as IntersectionObserver));
+    await waitFor(() => expect(play).toHaveBeenCalledTimes(2));
+    expect(container.querySelector('video')!.muted).toBe(true);
+    expect(screen.getByRole('button', { name: 'Ativar som do mar' })).toBeInTheDocument();
+    expect(screen.queryByText('Toque para iniciar o vídeo.')).not.toBeInTheDocument();
+  });
+
+  it('não retoma a reprodução se o visitante sair antes da tentativa terminar', async () => {
+    let rejectPlay: (error: DOMException) => void = () => {};
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementationOnce(() =>
+      new Promise<void>((_resolve, reject) => { rejectPlay = reject; }));
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+    let notify: IntersectionObserverCallback = () => {};
+    vi.stubGlobal('IntersectionObserver', class {
+      constructor(callback: IntersectionObserverCallback) { notify = callback; }
+      observe() {}
+      disconnect() {}
+    });
+    render(<SeaExperience item={film} />);
+    await act(async () => {
+      notify([{ isIntersecting: true, intersectionRatio: .2 } as IntersectionObserverEntry], {} as IntersectionObserver);
+      notify([{ isIntersecting: false, intersectionRatio: 0 } as IntersectionObserverEntry], {} as IntersectionObserver);
+      rejectPlay(new DOMException('Audio blocked', 'NotAllowedError'));
+    });
+    expect(play).toHaveBeenCalledOnce();
   });
 
   it('oferece nova tentativa quando a mídia falha', () => {
